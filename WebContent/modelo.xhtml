@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title><ui:insert name="titulo">Título</ui:insert></title>
+	<meta content="text/html; charset=ISO-88591" http-equiv="Content-Type" />
+</h:head>
+<h:body>
+
+	<h:graphicImage name="img/logosistema.png"></h:graphicImage>
+
+	<h:form prependId="false" enctype="multipart/form-data">
+		<p:toolbar>
+			<f:facet name="left">
+				<ui:insert name="botoes" />
+			</f:facet>
+
+			<f:facet name="right">
+				<p:commandButton immediate="true" icon="ui-icon-home" ajax="false" action="#{loginMB.home}"
+					value="#{msgs.botaoInicio}" />
+				<p:commandButton immediate="true" icon=" ui-icon-close" ajax="false" 
+					action="#{loginMB.acaoSair}" value="#{msgs.botaoSair}"
+					rendered="#{loginMB.autenticado}" />
+			</f:facet>
+		</p:toolbar>
+
+		<ui:insert name="cabecalho"></ui:insert>
+		
+		
+
+		<ui:insert name="conteudo"></ui:insert>
+	</h:form>
+</h:body>
+</html>

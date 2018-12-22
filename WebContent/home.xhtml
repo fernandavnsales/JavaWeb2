@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="modelo.xhtml">
+	<ui:define name="titulo">#{msgs.tituloCadastroAluno}</ui:define>
+
+	<ui:define name="conteudo">
+	<h:outputStylesheet library="css" name="style.css" />
+	
+		<h:form>
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			<p:panel header="Cadastro de Alunos" style="margin-bottom:20px; margin-top:10px;">
+				<p:panelGrid columns="2" cellpadding="8">
+					<h:graphicImage name="img/user.png"></h:graphicImage>
+				</p:panelGrid>
+				<p:commandButton id="cad-aluno" action="#{alunoMB.acaoListar}" value="Cadastrar" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

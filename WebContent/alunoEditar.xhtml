@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="modelo.xhtml">
+
+	<ui:define name="titulo">#{msgs.tituloEditarCadastro}</ui:define>
+
+	<ui:define name="conteudo">
+		<p:panel header="Formulário de Cadastro">
+			<p:panelGrid columns="1">
+				<p:growl id="msgs" showDetail="true" />
+				<h:panelGrid columns="2" cellpadding="4">
+					<h:form id="formCreate">
+							<h:panelGrid id="display" columns="2" cellpadding="4">
+								<p:tabView>
+									<p:tab title="Dados Pessoais">
+										<h:panelGrid id="aba1" columns="2" cellpadding="4">
+											<p:outputLabel for="matricula" value="#{msgs.campoMatricula}:" />
+											<h:inputHidden id="matricula" value="#{alunoMB.aluno.matricula}" />
+													
+											<p:outputLabel for="nome" value="#{msgs.campoNome}: " />
+												<p:inputText id="nome" value="#{alunoMB.aluno.nome}"
+													size="60" required="true" />
+
+											<p:outputLabel for="cpf" value="#{msgs.campoCpf}: " />
+											<p:inputMask id="cpf" value="#{alunoMB.aluno.cpf}"
+												mask="999.999.999-99" converter="cpfConverter"
+												validator="CpfValidator"
+												size="20" required="true" />
+											
+											<p:outputLabel for="dataNasc" value="#{msgs.campoDataNasc}: " />
+											<p:calendar id="dataNasc" value="#{alunoMB.aluno.dataNascimento}"
+						pattern="dd/MM/yyyy" required="true" />
+											
+											<p:outputLabel for="serie" value="#{msgs.campoSerie}: " />
+											<p:inputText id="serie" value="#{alunoMB.aluno.serie}"
+												size="12" required="true" />
+
+										<p:outputLabel value="#{msgs.campoTurno}: " />
+										<p:selectOneMenu id="turno" value="#{alunoMB.aluno.turno}"
+												required="true">
+												<f:selectItem itemLabel="Selecione..." itemValue="" />
+												<f:selectItems value="#{alunoMB.turnos}" var="turno"
+													itemLabel="#{turno.nome}" />
+											</p:selectOneMenu>
+											
+											<p:outputLabel for="imagem" value="#{msgs.campoImagem}: " />
+								<p:fileUpload id="imagem" value="#{alunoMB.uploadedFile}"
+									mode="simple" fileLimit="1" multiple="false"
+									allowTypes="/(\.|\/)(jpeg|jpg)$/"
+									invalidFileMessage="São permitidas somente imagens (jpeg, jpg)" />
+										
+								</h:panelGrid>
+										
+									</p:tab>
+									<p:tab title="Dados Endereço" id="tab2">
+										<p:commandButton value="Pesquisar CEP" icon="ui-icon-search" >
+											<f:ajax event="click" render="aba2" execute="@this nm-cep" listener="#{alunoMB.carregarEndereco()}"/>										
+											</p:commandButton>
+											
+											
+										<h:panelGrid id="aba2" columns="2" cellpadding="4">
+										
+											<p:outputLabel for="nm-cep" value="#{msgs.campoCep}: " />
+											<p:inputMask id="nm-cep" mask="99999-999" value="#{alunoMB.aluno.endereco.cep}" size="20"
+												required="true" />
+												
+											
+											<p:outputLabel for="logradouro" value="#{msgs.campoLogradouro}: " />
+											<p:inputText id="logradouro" value="#{alunoMB.aluno.endereco.logradouro}"
+												size="50" required="true"/>
+												
+											
+											<p:outputLabel for="numero" value="#{msgs.campoNumero}: " />
+											<p:inputText id="numero" value="#{alunoMB.aluno.endereco.numero}"
+												size="20" required="true"/>
+
+											<p:outputLabel for="bairro" value="#{msgs.campoBairro}: " />
+											<p:inputText id="bairro" value="#{alunoMB.aluno.endereco.bairro}"
+												size="20" required="true"/>
+
+											<p:outputLabel for="cidade" value="#{msgs.campoCidade}: "/>
+											<p:inputText id="cidade" value="#{alunoMB.aluno.endereco.localidade}"
+												size="20" required="true"/>
+
+											<p:outputLabel for="uf" value="#{msgs.campoUf}: " />
+											<p:inputText id="uf" value="#{alunoMB.aluno.endereco.uf}" size="20" required="true"/>
+										</h:panelGrid>
+									</p:tab>
+
+								</p:tabView>
+								<f:facet name="footer">
+									<p:separator />
+									<p:commandButton ajax="false" action="#{alunoMB.acaoSalvar}"
+										value="#{msgs.botaoSalvar}" icon="ui-icon-save" />
+									<p:commandButton action="#{alunoMB.acaoListar}"
+										value="#{msgs.botaoCancelar}" ajax="false" immediate="true"
+										icon="ui-icon-cancel" />
+								</f:facet>
+								</h:panelGrid>
+								</h:form>
+							</h:panelGrid>
+			</p:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

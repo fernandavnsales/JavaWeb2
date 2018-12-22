@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<ui:composition template="modelo.xhtml">
+	<ui:define name="titulo">#{msgs.tituloCadastroAluno}</ui:define>
+
+	<ui:define name="botoes">
+		<p:commandButton style="float:left;" icon="ui-icon-person" ajax="false" immediate="true"
+			action="#{alunoMB.acaoAbrirInclusao}" value="#{msgs.botaoNovoAluno}" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<p:confirmDialog global="true" showEffect="puff"
+			hideEffect="drop">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+		<p:panelGrid columns="2">
+			<p:outputLabel for="turno" value="#{msgs.campoTurno}: " />
+			<p:selectOneMenu id="turno" value="#{alunoMB.filtroTurno}">
+				<f:selectItem itemLabel="Selecione..." itemValue="" />
+				<f:selectItems value="#{alunoMB.turnos}" var="turno"
+					itemLabel="#{turno.nome}" />
+				<p:ajax event="change" process="turno nome" update="tabela" />
+			</p:selectOneMenu>
+
+			<p:outputLabel for="nome" value="#{msgs.campoNome}: " />
+			<p:inputText id="nome" value="#{alunoMB.filtroNome}" size="40"
+				maxlength="120">
+			</p:inputText>
+
+			<h:outputText value="" />
+			<p:commandButton ajax="true" action="#{alunoMB.acaoPesquisar}"
+				value="#{msgs.botaoBusca}" process="turno nome" update="tabela" />
+
+		</p:panelGrid>
+		<br></br>
+		<p:dataTable id="tabela" value="#{alunoMB.alunos}" var="aluno" 
+		rowHover="true" paginator="true" rows="20">
+
+			<f:facet name="header">Lista de Alunos</f:facet>
+			
+			<p:column style="width:110px">
+				<f:facet name="header">#{msgs.tituloAções}</f:facet>
+				<p:commandButton value="#{msgs.botaoAlterar}" action="#{alunoMB.acaoAbrirAlteracao(aluno.matricula)}" icon="ui-icon-pencil" />
+				<p:separator />
+				<p:commandButton 
+					value="#{msgs.botaoExcluir}" action="#{alunoMB.acaoExcluir(aluno.matricula)}" icon="ui-icon-trash">
+					<p:confirm header="Confirmação"
+						message="Deseja excluir o aluno [#{aluno.nome}]?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+			</p:column>
+
+			<p:column style="width:110px">
+				<f:facet name="header">#{msgs.campoMatricula}</f:facet>
+				<h:outputText value="#{aluno.matricula}"></h:outputText>
+			</p:column>
+
+			<p:column sortable="true" sortBy="#{aluno.nome}" style="width:110px">
+				<f:facet name="header">#{msgs.campoNome}</f:facet>
+				<h:outputText value="#{aluno.nome}"></h:outputText>
+			</p:column>
+
+			<p:column style="width:120px">
+				<f:facet name="header">#{msgs.campoCpf}</f:facet>
+				<h:outputText converter="cpfConverter" value="#{aluno.cpf}">
+				</h:outputText>
+			</p:column>
+
+			<p:column style="width:110px">
+				<f:facet name="header">#{msgs.campoDataNasc}</f:facet>
+				<h:outputText value="#{aluno.dataNascimento}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column style="width:100px">
+				<f:facet name="header">#{msgs.campoSerie}</f:facet>
+				<h:outputText value="#{aluno.serie}"></h:outputText>
+			</p:column>
+
+			<p:column sortable="true" sortBy="#{aluno.turno}" style="width:110px">
+				<f:facet name="header">#{msgs.campoTurno}</f:facet>
+				<h:outputText value="#{aluno.turno.nome}"></h:outputText>
+			</p:column>
+			
+			<p:column style="width:110px">
+				<f:facet name="header">#{msgs.campoCep}</f:facet>
+				<h:outputText value="#{aluno.endereco.cep}"></h:outputText>
+			</p:column>
+			
+			<p:column style="width:110px">
+				<f:facet name="header">#{msgs.campoLogradouro}</f:facet>
+				<h:outputText value="#{aluno.endereco.logradouro}"></h:outputText>
+			</p:column>
+			
+			<p:column style="width:110px">
+				<f:facet name="header">#{msgs.campoNumero}</f:facet>
+				<h:outputText value="#{aluno.endereco.numero}"></h:outputText>
+			</p:column>
+			
+			<p:column style="width:110px">
+				<f:facet name="header">#{msgs.campoBairro}</f:facet>
+				<h:outputText value="#{aluno.endereco.bairro}"></h:outputText>
+			</p:column>
+
+			<p:column style="width:110px">
+				<f:facet name="header">#{msgs.campoCidade}</f:facet>
+				<h:outputText value="#{aluno.endereco.localidade}"></h:outputText>
+			</p:column>
+
+			<p:column style="width:110px">
+				<f:facet name="header">#{msgs.campoUf}</f:facet>
+				<h:outputText value="#{aluno.endereco.uf}"></h:outputText>
+			</p:column>
+			
+			<p:column style="width:110px">
+				<f:facet name="header">#{msgs.campoImagem}</f:facet>
+				<p:graphicImage url="foto.jsf?matricula=#{aluno.matricula}"
+					width="100" height="100" />
+			</p:column>
+
+		</p:dataTable>
+
+	</ui:define>
+</ui:composition>
+</html>

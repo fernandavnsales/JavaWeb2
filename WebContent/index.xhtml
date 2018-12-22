@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="modelo.xhtml">
+	<ui:define name="titulo">#{msgs.tituloPrincipal}</ui:define>
+
+	<ui:define name="conteudo">
+		<h:outputStylesheet library="css" name="style.css" />
+
+		<h:body>
+			<div id="login-dialog">
+				<h:form prependId="false">
+					<p:messages id="messages" autoUpdate="true" />
+
+					<h:panelGrid columns="2" styleClass="grid-login">
+						<p:outputLabel for="login" value="#{msgs.campoLogin}" />
+						<p:inputText id="login" value="#{loginMB.login}"
+							requiredMessage="Login Inválido."
+							validatorMessage="Login Inválido" required="true" />
+
+						<p:outputLabel for="senha" value="#{msgs.campoSenha}" />
+						<p:password id="senha" value="#{loginMB.senha}"
+							requiredMessage="Senha Inválida."
+							validatorMessage="Senha Inválida." required="true" />
+
+						<div style="align:center;">
+							<p:commandButton id="enviar" value="#{msgs.botaoLogar}"
+								action="#{loginMB.acaoAutenticar}" />
+						</div>
+					</h:panelGrid>
+				</h:form>
+			</div>
+		</h:body>
+	</ui:define>
+
+</ui:composition>
+</html>
